@@ -69,12 +69,27 @@ public class BasicItemController {
   }
 
   /* @ModelAttribute 전체 생략 */
-  @PostMapping("/add")
+//  @PostMapping("/add")
   public String addItemV4(Item item) {
     itemRepository.save(item);
 
     return "basic/item";
   }
+
+  /**
+   * PRG - Post / Redirect / Get
+   */
+  @PostMapping("/add")
+  public String addItemV5(Item item) {
+    itemRepository.save(item);
+
+    return "redirect:/basic/items/" + item.getId();
+  }
+
+  /**
+   * RedirectAttributes
+   * PRG는 URL 인코딩이 안되서 위험 -> RedirectAttributes 사용
+   */
 
   @GetMapping("/{itemId}/edit")
   public String editForm(@PathVariable Long itemId, Model model) {
